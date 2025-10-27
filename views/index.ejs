@@ -1,1 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login Form</title>
+  <link rel="stylesheet" href="#">
+</head>
+<body>
+  <style>
+  body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f0f8ff, #fce4ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
+.login-container {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  width: 360px;
+  text-align: center;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px #ccc;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.colorful-label {
+  display: block;
+  font-weight: bold;
+  font-size: 15px;
+  background: linear-gradient(45deg, #2196f3, #007bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 5px;
+}
+
+.password-label {
+  background: linear-gradient(45deg, #007bff, #2785b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 5px rgba(33,150,243,0.5);
+}
+
+.captcha-container {
+  margin-bottom: 15px;
+}
+
+.captcha-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e1e1e1;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#refresh-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+}
+
+.robot-check {
+  margin-top: 10px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background-color: #0069d9;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.google-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.google-btn:hover {
+  background: #f1f1f1;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+}
+</style>
+
+  <div class="login-container">
+    <h2>User Login Form</h2>
+
+    <form id="loginForm" action="/login" method="POST">
+      <div class="input-group">
+        <label class="colorful-label">Username:</label>
+        <input type="text" name="username" placeholder="Phone (or) Email" required>
+      </div>
+
+      <div class="input-group">
+        <label class="colorful-label password-label">Password:</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <!-- Captcha -->
+      <div class="captcha-container">
+        <div class="captcha-box">
+          <span id="captcha-text"></span>
+          <button type="button" id="refresh-btn" title="Refresh Captcha">🔄</button>
+        </div>
+        <input type="hidden" name="generatedCaptcha" id="generatedCaptcha">
+        <input type="text" id="captcha-input" name="captcha" placeholder="Enter captcha" required>
+
+        <div class="robot-check">
+          <input type="checkbox" id="robot-check" name="robot">
+          <label for="robot-check">I'm not a robot 🤖</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">Submit</button>
+
+      <div class="login-footer">
+        <p>— or —</p>
+        <button type="button" class="google-btn">
+          Continue with Google 
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="google-icon">
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const captchaText = document.getElementById("captcha-text");
+const refreshBtn = document.getElementById("refresh-btn");
+const generatedCaptcha = document.getElementById("generatedCaptcha");
+
+function generateCaptcha() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let captcha = "";
+  for (let i = 0; i < 6; i++) {
+    captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  captchaText.textContent = captcha;
+  generatedCaptcha.value = captcha;
+}
+
+refreshBtn.addEventListener("click", generateCaptcha);
+window.onload = generateCaptcha;
+
+  </script>
+</body>
+</html>
